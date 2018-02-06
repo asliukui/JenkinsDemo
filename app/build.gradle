@@ -10,19 +10,49 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs{
+        release{
+            keyAlias KEY_ALIAS
+            keyPassword KEY_ALIAS_PWD
+            storeFile file('../key')
+            storePassword KEY_PASSWORD
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false //zip优化
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false //zip优化
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            //新名字
+            def newName
+            //输出文件夹
+            newName = "JenkinsDemo"+ '_'+variant.buildType.name+"_${buildTime()}.apk"
+            outputFileName = newName
         }
     }
 }
 
 dependencies {
+    def dependencies = rootProject.ext.jenkinsDependencies
+    def testDependencies =rootProject.ext.testDependencies
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation dependencies.constraint
+    implementation dependencies.supportv7
+    implementation dependencies.design
+
+    testImplementation  testDependencies.junit4
+    androidTestImplementation testDependencies.runner
+    androidTestImplementation testDependencies.espresso
 }

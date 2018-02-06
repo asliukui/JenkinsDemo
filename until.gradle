@@ -1,0 +1,37 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    //Libraries
+    gsonVersion = '2.7'
+    supportv7Version = '26.1.0'
+    recyclerViewV7Version = '25.0.0'
+    glideVersion = '3.7.0'
+    okHttpVersion = '3.8.1'
+    constraintVersion = "1.0.2"
+    designViewVersion = "22.2.0"
+
+    //Testing
+    jUnitVersion = '4.12'
+    runnerVersion = '1.0.1'
+    espressoVersion = '3.0.1'
+    jenkinsDependencies = [
+            gson        : "com.google.code.gson:gson:${gsonVersion}",
+            supportv7   : "com.android.support:appcompat-v7:${supportv7Version}",
+            constraint  : "com.android.support.constraint:constraint-layout:${constraintVersion}",
+            design      : "com.android.support:design:${designViewVersion}",
+            recyclerview: "com.android.support:recyclerview-v7:${recyclerViewV7Version}",
+            glide       : "com.github.bumptech.glide:glide:${glideVersion}",
+            okhttp      : "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+    ]
+    testDependencies = [
+            junit4  : "junit:junit:${jUnitVersion}",
+            espresso: "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            runner  : "com.android.support.test:runner:${runnerVersion}"
+    ]
+}
+
+
