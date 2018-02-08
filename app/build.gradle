@@ -17,6 +17,12 @@ android {
             storeFile file('../key')
             storePassword KEY_PASSWORD
         }
+        debug{
+            keyAlias KEY_ALIAS
+            keyPassword KEY_ALIAS_PWD
+            storeFile file('../key')
+            storePassword KEY_PASSWORD
+        }
     }
     buildTypes {
         release {
@@ -27,10 +33,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug{
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled false //zip优化
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     android.applicationVariants.all { variant ->
@@ -38,8 +45,17 @@ android {
             //新名字
             def newName
             //输出文件夹
-            newName = "JenkinsDemo"+ '_'+variant.buildType.name+"_${buildTime()}.apk"
-            outputFileName = newName
+            def outDirectory
+            if ("true".equals(IS_JENKINS)) {
+                outDirectory = BUILD_PATH_JENKINS
+                newName = "JenkinsDemo"+ '_'+variant.buildType.name+"_${buildTime()}.apk"
+                outputFileName = new File(outDirectory, newName)
+            }else {
+//                outDirectory = BUILD_PATH_LOCAL
+                newName = "Demo"+ '_'+variant.buildType.name+"_${buildTime()}.apk"
+                outputFileName = newName
+            }
+
         }
     }
 }
