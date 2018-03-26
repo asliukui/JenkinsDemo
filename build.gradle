@@ -25,6 +25,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
 def buildTime() {
     return new Date().format("HH:mm", TimeZone.getTimeZone("UTC"))
 }

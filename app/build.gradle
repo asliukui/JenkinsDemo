@@ -48,11 +48,12 @@ android {
             def outDirectory
             if ("true".equals(IS_JENKINS)) {
                 outDirectory = BUILD_PATH_JENKINS
-                newName = "JenkinsDemo"+ '_'+variant.buildType.name+"_${buildTime()}.apk"
+                newName = "JenkinsDemo"+ '_'+variant.buildType.name+".apk"
                 outputFileName = new File(outDirectory, newName)
             }else {
 //                outDirectory = BUILD_PATH_LOCAL
-                newName = "Demo"+ '_'+variant.buildType.name+"_${buildTime()}.apk"
+                newName = "Demo"+ '_'+variant.buildType.name+".apk"
+//                newName = "Demo"+ '_'+variant.buildType.name+"_${buildTime()}.apk"
                 outputFileName = newName
             }
 
